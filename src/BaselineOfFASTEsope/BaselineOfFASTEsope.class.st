@@ -1,6 +1,6 @@
 Class {
 	#name : #BaselineOfFASTEsope,
-	#superclass : #Object,
+	#superclass : #BaselineOf,
 	#category : #BaselineOfFASTEsope
 }
 
@@ -17,7 +17,13 @@ BaselineOfFASTEsope >> baseline: spec [
 { #category : #baselines }
 BaselineOfFASTEsope >> defineDependencies: spec [
 
-	spec baseline: 'FAST-Fortran' with: [
+	spec
+		baseline: 'FAST' with: [
+			spec
+				loads: #( 'default' );
+				repository: 'github://moosetechnology/FAST:v2/src' ];
+		
+		baseline: 'FAST-Fortran' with: [
 		spec
 			loads: #( 'default' );
 			repository: 'github://moosetechnology/FAST-Fortran/src' ]
@@ -28,7 +34,7 @@ BaselineOfFASTEsope >> definePackages: spec [
 
 	spec
 		repository: 'https://github.com/moosetechnology/FAST-Esope';
-		package: 'FAST-Esope' with: [ spec requires: #( FAST - Fortran ) ];
+		package: 'FAST-Esope' with: [ spec requires: #( FAST-Fortran ) ];
 		package: 'FAST-Esope-Entities'
-		with: [ spec requires: #( FAST - Fortran ) ]
+		with: [ spec requires: #( FAST-Fortran ) ]
 ]
