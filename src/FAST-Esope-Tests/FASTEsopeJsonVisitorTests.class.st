@@ -4,28 +4,25 @@ Class {
 	#category : #'FAST-Esope-Tests'
 }
 
+{ #category : #running }
+FASTEsopeJsonVisitorTests >> jsonVisitor [
+
+		^FASTEsopeJsonVisitor 
+]
+
 { #category : #tests }
 FASTEsopeJsonVisitorTests >> testSeginiCommand [
 	
-	| result asnmt expr |
+	| result stmt |
 	fortranCode := '      PROGRAM MYPROG
-C@_     segini,p
+C@_     segini,pt
       END
 '.
-	jsonCode := '{"meta":{"miVersion":"fortran77","miFilename":"./fortran77.f"},"program_units":[{"anno":[],"blocks":[{"anno":[],"label":null,"span":"(2:8)-(2:16)","statement":{"anno":[],"expression":{"anno":[],"left":{"anno":[],"span":"(2:12)-(2:12)","tag":"value","value":{"contents":["5",null],"tag":"integer"}},"op":{"tag":"addition"},"right":{"anno":[],"span":"(2:16)-(2:16)","tag":"value","value":{"contents":["6",null],"tag":"integer"}},"span":"(2:12)-(2:16)","tag":"binary"},"span":"(2:8)-(2:16)","tag":"assign_expression","target":{"anno":[],"span":"(2:8)-(2:8)","tag":"value","value":{"contents":"i","tag":"variable"}}},"tag":"statement"}],"name":"myprog","span":"(1:7)-(3:9)","subprograms":null,"tag":"main"}]}'.
+	jsonCode := '{"meta":{"miVersion":"fortran77","miFilename":"./fortran77.f"},"program_units":[{"anno":[],"arguments":null,"blocks":[{"anno":[],"comment":"@_   segini,pt","span":"(2:1)-(2:15)","tag":"comment"}],"name":"hello","options":[null,null],"span":"(1:7)-(3:9)","subprograms":null,"tag":"subroutine"}]}'.
 	result := self visitJsonCode.
 
-	asnmt := result first statementBlock statements first.
-	self assert: asnmt class equals: FASTFortranAssignmentStatement.	
-	
-	expr := asnmt expression.
-	self assert: expr class equals: FASTFortranBinaryExpression.
-	self assert: expr operator equals: 'addition'.
-	self assert: expr startPos equals: 33.
-
-	self assert: expr left class equals: FASTFortranIntegerLiteral.
-	self assert: expr left startPos equals: 33.
-
-	self assert: expr right class equals: FASTFortranIntegerLiteral.
-	self assert: expr right startPos equals: 37.
+	stmt := result first statementBlock statements first.
+	self assert: stmt class equals: FASTEsopePointerStatement.	
+	self assert: stmt command equals: 'segini'.
+	self assert: stmt pointerVariable equals: 'pt'.
 ]
