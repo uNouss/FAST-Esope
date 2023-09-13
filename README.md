@@ -8,5 +8,6 @@ To load:
 Metacello new
   githubUser: 'moosetechnology' project: 'FAST-Esope' commitish: 'master' path: 'src';
   baseline: 'FASTEsope';
+  onConflict: [ :e | e allow ] ;
   load.
 ```
