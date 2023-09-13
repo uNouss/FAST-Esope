@@ -5,6 +5,17 @@ Class {
 }
 
 { #category : #'visiting esope' }
+FASTEsopeJsonVisitor >> createEsopeStatement: anEsopeCommentNode [
+
+	| data |
+	data := self parseEsopeCommand: anEsopeCommentNode.
+	^ (self newEntity: FASTEsopePointerStatement atPosition: data second)
+		  command: data third ;
+		  pointerVariable: data fourth ;
+		  yourself
+]
+
+{ #category : #'visiting esope' }
 FASTEsopeJsonVisitor >> visitEsopeEndsegmentComment: anEsopeCommentNode [
 	| esopeCommand |
 	esopeCommand := self esopeCommand: (anEsopeCommentNode at: 'comment').
@@ -36,45 +47,25 @@ FASTEsopeJsonVisitor >> visitEsopePointeurComment: anEsopeCommentNode [
 { #category : #'visiting esope' }
 FASTEsopeJsonVisitor >> visitEsopeSegactComment: anEsopeCommentNode [
 
-	| data |
-	data := super visitEsopeSegactComment: anEsopeCommentNode.
-	^(self newEntity: FASTEsopePointerStatement atPosition: data first)
-		command: #segact ;
-		pointerVariable: data third ;
-		yourself
+	^ self createEsopeStatement: anEsopeCommentNode
 ]
 
 { #category : #'visiting esope' }
 FASTEsopeJsonVisitor >> visitEsopeSegadjComment: anEsopeCommentNode [
 
-	| data |
-	data := super visitEsopeSegadjComment: anEsopeCommentNode.
-	^(self newEntity: FASTEsopePointerStatement atPosition: data first)
-		command: #segadj ;
-		pointerVariable: data third ;
-		yourself
+	^ self createEsopeStatement: anEsopeCommentNode
 ]
 
 { #category : #'visiting esope' }
 FASTEsopeJsonVisitor >> visitEsopeSegdesComment: anEsopeCommentNode [
 
-	| data |
-	data := super visitEsopeSegdesComment: anEsopeCommentNode.
-	^(self newEntity: FASTEsopePointerStatement atPosition: data first)
-		command: #segdes ;
-		pointerVariable: data third ;
-		yourself
+	^ self createEsopeStatement: anEsopeCommentNode
 ]
 
 { #category : #'visiting esope' }
 FASTEsopeJsonVisitor >> visitEsopeSeginiComment: anEsopeCommentNode [
 
-	| data |
-	data := super visitEsopeSeginiComment: anEsopeCommentNode.
-	^(self newEntity: FASTEsopePointerStatement atPosition: data first)
-		command: #segini ;
-		pointerVariable: data third ;
-		yourself
+	^ self createEsopeStatement: anEsopeCommentNode
 ]
 
 { #category : #'visiting esope' }
@@ -90,12 +81,7 @@ FASTEsopeJsonVisitor >> visitEsopeSegmentComment: anEsopeCommentNode [
 { #category : #'visiting esope' }
 FASTEsopeJsonVisitor >> visitEsopeSegsupComment: anEsopeCommentNode [
 
-	| data |
-	data := super visitEsopeSegsupComment: anEsopeCommentNode.
-	^(self newEntity: FASTEsopePointerStatement atPosition: data first)
-		command: #segsup ;
-		pointerVariable: data third ;
-		yourself
+	^ self createEsopeStatement: anEsopeCommentNode
 ]
 
 { #category : #'visiting esope' }
