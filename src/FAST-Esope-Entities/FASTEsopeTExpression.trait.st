@@ -7,10 +7,7 @@ Trait {
 		'#expressionStatementOwner => FMOne type: #FASTEsopeTExpressionStatement opposite: #expression',
 		'#returnOwner => FMOne type: #FASTEsopeTReturnStatement opposite: #expression',
 		'#argumentOwner => FMOne type: #FASTEsopeTWithArguments opposite: #arguments',
-		'#assignedIn => FMOne type: #FASTEsopeTAssignment opposite: #expression',
-		'#parentExpression => FMOne type: #FASTEsopeBinaryExpression opposite: #left',
-		'#parentIfBlock => FMOne type: #FASTEsopeIfBlockStatement opposite: #condition',
-		'#assignementExpressionOwner => FMOne type: #FASTEsopeAssignmentStatement opposite: #expression'
+		'#assignedIn => FMOne type: #FASTEsopeTAssignment opposite: #expression'
 	],
 	#traits : 'FASTEsopeTEntity',
 	#classTraits : 'FASTEsopeTEntity classTrait',
@@ -68,31 +65,6 @@ FASTEsopeTExpression >> assignedIn: anObject [
 ]
 
 { #category : #accessing }
-FASTEsopeTExpression >> assignementExpressionOwner [
-	"Relation named: #assignementExpressionOwner type: #FASTEsopeAssignmentStatement opposite: #expression"
-
-	<generated>
-	<FMComment: 'The AssignementExpression owner (if possible)'>
-	<container>
-	<derived>
-	^ assignementExpressionOwner
-]
-
-{ #category : #accessing }
-FASTEsopeTExpression >> assignementExpressionOwner: anObject [
-
-	<generated>
-	assignementExpressionOwner := anObject
-]
-
-{ #category : #navigation }
-FASTEsopeTExpression >> assignementExpressionOwnerGroup [
-	<generated>
-	<navigation: 'AssignementExpressionOwner'>
-	^ MooseSpecializedGroup with: self assignementExpressionOwner
-]
-
-{ #category : #accessing }
 FASTEsopeTExpression >> expressionStatementOwner [
 	"Relation named: #expressionStatementOwner type: #FASTEsopeTExpressionStatement opposite: #expression"
 
@@ -115,56 +87,6 @@ FASTEsopeTExpression >> expressionStatementOwnerGroup [
 	<generated>
 	<navigation: 'ExpressionStatementOwner'>
 	^ MooseSpecializedGroup with: self expressionStatementOwner
-]
-
-{ #category : #accessing }
-FASTEsopeTExpression >> parentExpression [
-	"Relation named: #parentExpression type: #FASTEsopeBinaryExpression opposite: #left"
-
-	<generated>
-	<FMComment: 'Parent expression (if possible)'>
-	<container>
-	<derived>
-	^ parentExpression
-]
-
-{ #category : #accessing }
-FASTEsopeTExpression >> parentExpression: anObject [
-
-	<generated>
-	parentExpression := anObject
-]
-
-{ #category : #navigation }
-FASTEsopeTExpression >> parentExpressionGroup [
-	<generated>
-	<navigation: 'ParentExpression'>
-	^ MooseSpecializedGroup with: self parentExpression
-]
-
-{ #category : #accessing }
-FASTEsopeTExpression >> parentIfBlock [
-	"Relation named: #parentIfBlock type: #FASTEsopeIfBlockStatement opposite: #condition"
-
-	<generated>
-	<FMComment: 'Parent if block'>
-	<container>
-	<derived>
-	^ parentIfBlock
-]
-
-{ #category : #accessing }
-FASTEsopeTExpression >> parentIfBlock: anObject [
-
-	<generated>
-	parentIfBlock := anObject
-]
-
-{ #category : #navigation }
-FASTEsopeTExpression >> parentIfBlockGroup [
-	<generated>
-	<navigation: 'ParentIfBlock'>
-	^ MooseSpecializedGroup with: self parentIfBlock
 ]
 
 { #category : #accessing }

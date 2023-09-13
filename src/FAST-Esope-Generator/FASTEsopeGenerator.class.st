@@ -1,11 +1,13 @@
 Class {
 	#name : #FASTEsopeGenerator,
-	#superclass : #FASTFortranGenerator,
+	#superclass : #FASTMetamodelGenerator,
 	#instVars : [
 		'segment',
 		'pointerDeclaration',
 		'include',
-		'pointerStatement'
+		'pointerStatement',
+		'declarationStatement',
+		'type'
 	],
 	#category : #'FAST-Esope-Generator'
 }
@@ -32,6 +34,9 @@ FASTEsopeGenerator class >> submetamodels [
 FASTEsopeGenerator >> defineClasses [
 
 	super defineClasses.
+
+	declarationStatement := self remoteEntity: #DeclarationStatement withPrefix: #FASTFortran.
+	type := self remoteEntity: #Type withPrefix: #FASTFortran.
 
 	segment := builder newClassNamed: #Segment.
 	pointerStatement := builder newClassNamed: #PointerStatement comment: 'Represents any of the 5 Esope statements on pointers: segact, segadj, segdes, segini, segsup'.

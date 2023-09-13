@@ -4,7 +4,6 @@ An abstract subclass which represents a source code statemnet
 Trait {
 	#name : #FASTEsopeTStatement,
 	#instVars : [
-		'#label => FMProperty',
 		'#statementContainer => FMOne type: #FASTEsopeTStatementBlock opposite: #statements'
 	],
 	#traits : 'FASTEsopeTEntity',
@@ -26,21 +25,6 @@ FASTEsopeTStatement >> isStatement [
 
 	<generated>
 	^ true
-]
-
-{ #category : #accessing }
-FASTEsopeTStatement >> label [
-
-	<FMProperty: #label type: #String>
-	<generated>
-	<FMComment: 'Determines the statement label which consists of 1 to 5 digits, with at least one nonzero'>
-	^ label
-]
-
-{ #category : #accessing }
-FASTEsopeTStatement >> label: anObject [
-	<generated>
-	label := anObject
 ]
 
 { #category : #accessing }

@@ -1,9 +1,8 @@
 Class {
 	#name : #FASTEsopeSegment,
-	#superclass : #FASTEsopeType,
+	#superclass : #FASTFortranType,
 	#instVars : [
-		'#name => FMProperty',
-		'#members => FMMany type: #FASTEsopeDeclarationStatement opposite: #parentSegment'
+		'#name => FMProperty'
 	],
 	#category : #'FAST-Esope-Entities-Entities'
 }
@@ -11,7 +10,7 @@ Class {
 { #category : #meta }
 FASTEsopeSegment class >> annotation [
 
-	<FMClass: #Segment super: #FASTEsopeType>
+	<FMClass: #Segment super: #FASTFortranType>
 	<package: #'FAST-Esope-Entities'>
 	<generated>
 	^ self
@@ -25,19 +24,20 @@ FASTEsopeSegment >> addMember: anObject [
 
 { #category : #accessing }
 FASTEsopeSegment >> members [
-	"Relation named: #members type: #FASTEsopeDeclarationStatement opposite: #parentSegment"
+	"Relation named: #members type: #FASTFortranDeclarationStatement opposite: #parentSegment"
 
 	<generated>
 	<FMComment: 'Variables declarations inside the Esope segment'>
 	<derived>
-	^ members
+	<FMProperty: #members type: #FASTFortranDeclarationStatement opposite: #parentSegment>
+	^ self attributeAt: #members ifAbsentPut: [ FMMultivalueLink on: self opposite: #parentSegment: ]
 ]
 
 { #category : #accessing }
 FASTEsopeSegment >> members: anObject [
 
 	<generated>
-	members value: anObject
+	self members value: anObject
 ]
 
 { #category : #navigation }

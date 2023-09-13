@@ -5,9 +5,7 @@ Trait {
 	#name : #FASTEsopeTStatementBlock,
 	#instVars : [
 		'#fastBehaviouralParent => FMOne type: #FASTEsopeTBehaviouralEntity opposite: #statementBlock',
-		'#statements => FMMany type: #FASTEsopeTStatement opposite: #statementContainer',
-		'#parentDoStatement => FMOne type: #FASTEsopeDoStatement opposite: #statementBlock',
-		'#parentIfBlock => FMOne type: #FASTEsopeIfBlockStatement opposite: #thenStatementBlock'
+		'#statements => FMMany type: #FASTEsopeTStatement opposite: #statementContainer'
 	],
 	#traits : 'FASTEsopeTStatement',
 	#classTraits : 'FASTEsopeTStatement classTrait',
@@ -52,56 +50,6 @@ FASTEsopeTStatementBlock >> fastBehaviouralParentGroup [
 	<generated>
 	<navigation: 'FastBehaviouralParent'>
 	^ MooseSpecializedGroup with: self fastBehaviouralParent
-]
-
-{ #category : #accessing }
-FASTEsopeTStatementBlock >> parentDoStatement [
-	"Relation named: #parentDoStatement type: #FASTEsopeDoStatement opposite: #statementBlock"
-
-	<generated>
-	<FMComment: 'Parent do statement'>
-	<container>
-	<derived>
-	^ parentDoStatement
-]
-
-{ #category : #accessing }
-FASTEsopeTStatementBlock >> parentDoStatement: anObject [
-
-	<generated>
-	parentDoStatement := anObject
-]
-
-{ #category : #navigation }
-FASTEsopeTStatementBlock >> parentDoStatementGroup [
-	<generated>
-	<navigation: 'ParentDoStatement'>
-	^ MooseSpecializedGroup with: self parentDoStatement
-]
-
-{ #category : #accessing }
-FASTEsopeTStatementBlock >> parentIfBlock [
-	"Relation named: #parentIfBlock type: #FASTEsopeIfBlockStatement opposite: #thenStatementBlock"
-
-	<generated>
-	<FMComment: 'Parent if block'>
-	<container>
-	<derived>
-	^ parentIfBlock
-]
-
-{ #category : #accessing }
-FASTEsopeTStatementBlock >> parentIfBlock: anObject [
-
-	<generated>
-	parentIfBlock := anObject
-]
-
-{ #category : #navigation }
-FASTEsopeTStatementBlock >> parentIfBlockGroup [
-	<generated>
-	<navigation: 'ParentIfBlock'>
-	^ MooseSpecializedGroup with: self parentIfBlock
 ]
 
 { #category : #accessing }

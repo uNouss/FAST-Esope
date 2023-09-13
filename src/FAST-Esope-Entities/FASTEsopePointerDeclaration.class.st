@@ -3,14 +3,14 @@ Represents an Esope pointer declaration
 "
 Class {
 	#name : #FASTEsopePointerDeclaration,
-	#superclass : #FASTEsopeDeclarationStatement,
+	#superclass : #FASTFortranDeclarationStatement,
 	#category : #'FAST-Esope-Entities-Entities'
 }
 
 { #category : #meta }
 FASTEsopePointerDeclaration class >> annotation [
 
-	<FMClass: #PointerDeclaration super: #FASTEsopeDeclarationStatement>
+	<FMClass: #PointerDeclaration super: #FASTFortranDeclarationStatement>
 	<package: #'FAST-Esope-Entities'>
 	<generated>
 	^ self
