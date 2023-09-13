@@ -7,7 +7,8 @@ Class {
 	#traits : 'FASTEsopeTStatement',
 	#classTraits : 'FASTEsopeTStatement classTrait',
 	#instVars : [
-		'#command => FMProperty'
+		'#command => FMProperty',
+		'#pointerVariable => FMProperty'
 	],
 	#category : #'FAST-Esope-Entities-Entities'
 }
@@ -34,4 +35,19 @@ FASTEsopePointerStatement >> command [
 FASTEsopePointerStatement >> command: anObject [
 	<generated>
 	command := anObject
+]
+
+{ #category : #accessing }
+FASTEsopePointerStatement >> pointerVariable [
+
+	<FMProperty: #pointerVariable type: #String>
+	<generated>
+	<FMComment: 'Name of the pointer variable acted upon by the command'>
+	^ pointerVariable
+]
+
+{ #category : #accessing }
+FASTEsopePointerStatement >> pointerVariable: anObject [
+	<generated>
+	pointerVariable := anObject
 ]

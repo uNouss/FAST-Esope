@@ -62,6 +62,8 @@ FASTEsopeGenerator >> defineProperties [
 
 	(pointerStatement property: #command type: #String)
 		comment: 'One of the five Esope commands: #segact, #segadj, #segdes, #segini, #segsup'.
+	(pointerStatement property: #pointerVariable type: #String)
+		comment: 'Name of the pointer variable acted upon by the command'.
 
 	(segment property: #name type: #String)
 		comment: 'The name of the Esope segment'.
