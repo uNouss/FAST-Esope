@@ -38,6 +38,13 @@ FASTEsopeTEntityCreator >> newPointerStatement [
 ]
 
 { #category : #'entity creation' }
+FASTEsopeTEntityCreator >> newPointerType [
+
+	<generated>
+	^ self add: FASTEsopePointerType new
+]
+
+{ #category : #'entity creation' }
 FASTEsopeTEntityCreator >> newSegment [
 
 	<generated>

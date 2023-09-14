@@ -7,7 +7,8 @@ Class {
 		'include',
 		'pointerStatement',
 		'declarationStatement',
-		'type'
+		'type',
+		'pointerType'
 	],
 	#category : #'FAST-Esope-Generator'
 }
@@ -41,6 +42,7 @@ FASTEsopeGenerator >> defineClasses [
 	segment := builder newClassNamed: #Segment.
 	pointerStatement := builder newClassNamed: #PointerStatement comment: 'Represents any of the 5 Esope statements on pointers: segact, segadj, segdes, segini, segsup'.
 	pointerDeclaration := builder newClassNamed: #PointerDeclaration comment: 'Represents an Esope pointer declaration'.
+	pointerType := builder newClassNamed: #PointerType comment: 'Represents an Esope segment type used in a pointer declaration'.
 	include := builder newClassNamed: #Include comment: 'Represents a #include instruction in an Esope file'.
 ]
 
@@ -51,6 +53,7 @@ FASTEsopeGenerator >> defineHierarchy [
 
 	pointerStatement --|> tStatement.
 	pointerDeclaration --|> declarationStatement.
+	pointerType --|> type.
 	segment --|> type.
 
 ]
@@ -65,8 +68,12 @@ FASTEsopeGenerator >> defineProperties [
 	(pointerStatement property: #pointerVariable type: #String)
 		comment: 'Name of the pointer variable acted upon by the command'.
 
+	(pointerType property: #name type: #String)
+		comment: 'Name of a segment used in a pointer declaration'.
+
 	(segment property: #name type: #String)
 		comment: 'The name of the Esope segment'.
+
 
 ]
 
