@@ -55,6 +55,7 @@ FASTEsopeGenerator >> defineHierarchy [
 	pointerDeclaration --|> declarationStatement.
 	pointerType --|> type.
 	segment --|> type.
+	include --|> tStatement 
 
 ]
 
@@ -74,7 +75,8 @@ FASTEsopeGenerator >> defineProperties [
 	(segment property: #name type: #String)
 		comment: 'The name of the Esope segment'.
 
-
+	(include property: #filename type: #String)
+		comment: 'name of the file included'.
 ]
 
 { #category : #definition }

@@ -11,6 +11,24 @@ FASTEsopeJsonVisitorTests >> jsonVisitor [
 ]
 
 { #category : #tests }
+FASTEsopeJsonVisitorTests >> testIncludeInstruction [
+	
+	| result stmt |
+	fortranCode := '      PROGRAM MYPROG
+C@_#include "file.inc"
+      END
+'.
+	jsonCode := '{"meta":{"miVersion":"fortran77","miFilename":"FastTmp/tmpFASTSource.f"},"program_units":[{"anno":[],"blocks":[{"anno":[],"comment":"@_#include \"file.inc\"","span":"(2:1)-(2:22)","tag":"comment"}],"name":"myprog","span":"(1:7)-(3:9)","subprograms":null,"tag":"main"}]}'.
+	result := self visitJsonCode.
+
+	stmt := result first statementBlock statements first.
+	self assert: stmt class equals: FASTEsopeInclude.	
+	self assert: stmt filename equals: 'file.inc'.
+	self assert: stmt startPos equals: 26.
+	self assert: stmt endPos equals: 43.
+]
+
+{ #category : #tests }
 FASTEsopeJsonVisitorTests >> testPointerDeclaration [
 	
 	| result stmt |

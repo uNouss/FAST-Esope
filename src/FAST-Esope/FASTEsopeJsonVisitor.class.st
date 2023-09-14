@@ -16,11 +16,11 @@ FASTEsopeJsonVisitor >> visitEsopeEndSegmentComment: anEsopeCommentNode [
 { #category : #'visiting esope' }
 FASTEsopeJsonVisitor >> visitEsopeIncludeComment: anEsopeIncludeCommentNode [
 
-	| key esopeCommand |
-	esopeCommand := self esopeCommand:
-		                (anEsopeIncludeCommentNode at: 'comment').
-	key := esopeCommand first asLowercase capitalized , 'Comment'.
-	^ self visitJsonNode: key value: anEsopeIncludeCommentNode
+	| data |
+	data := super visitEsopeSegactComment: anEsopeIncludeCommentNode.
+	^ (self newEntity: FASTEsopeInclude atPosition: data second)
+		  filename: data fourth ;
+		  yourself
 ]
 
 { #category : #'visiting esope' }
@@ -99,17 +99,4 @@ FASTEsopeJsonVisitor >> visitEsopeSegsupComment: anEsopeCommentNode [
 		  command: data third ;
 		  pointerVariable: data fourth ;
 		  yourself
-]
-
-{ #category : #'visiting esope' }
-FASTEsopeJsonVisitor >> visitIncludeComment: anEsopeIncludeCommentNode [
-
-	| esopeCommand |
-
-	esopeCommand := self esopeCommand:
-		                (anEsopeIncludeCommentNode at: 'comment').
-	^ { 
-		  (self visitSpan: (anEsopeIncludeCommentNode at: 'span')).
-		  esopeCommand first.
-		  esopeCommand second }
 ]
