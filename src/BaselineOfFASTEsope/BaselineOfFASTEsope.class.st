@@ -17,7 +17,7 @@ BaselineOfFASTEsope >> baseline: spec [
 { #category : #baselines }
 BaselineOfFASTEsope >> defineDependencies: spec [
 
-	spec baseline: 'FASTFortran' with: [
+	spec baseline: 'FAST-Fortran' with: [
 		spec
 			loads: #( 'default' );
 			repository: 'github://moosetechnology/FAST-Fortran/src' ]
@@ -28,6 +28,8 @@ BaselineOfFASTEsope >> definePackages: spec [
 
 	spec
 		repository: 'github://moosetechnology/FAST-Esope';
-		package: 'FAST-Esope';
-		package: 'FAST-Esope-Entities'
+		package: 'FAST-Esope' with: [ spec requires: #('FAST-Fortran' 'FAST-Esope-Entities') ] ;
+		package: 'FAST-Esope-Tests' with: [ spec requires: #('FAST-Esope') ] ;
+		package: 'FAST-Esope-Entities' ;
+		package: 'FAST-Esope-Generator'
 ]
