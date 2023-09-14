@@ -16,7 +16,7 @@ FASTEsopeJsonVisitor >> processEsopeComment: anEsopeCommentNode [
 ]
 
 { #category : #'visiting esope' }
-FASTEsopeJsonVisitor >> visitEsopeEndsegmentComment: anEsopeCommentNode [
+FASTEsopeJsonVisitor >> visitEsopeEndSegmentComment: anEsopeCommentNode [
 	| esopeCommand |
 	esopeCommand := self esopeCommand: (anEsopeCommentNode at: 'comment').
 	^{ self visitSpan: (anEsopeCommentNode at: 'span') .
