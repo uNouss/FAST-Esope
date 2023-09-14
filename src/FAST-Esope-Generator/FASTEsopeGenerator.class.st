@@ -55,6 +55,7 @@ FASTEsopeGenerator >> defineHierarchy [
 	pointerDeclaration --|> declarationStatement.
 	pointerType --|> type.
 	segment --|> type.
+	segment --|> tStatement.
 	include --|> tStatement 
 
 ]
