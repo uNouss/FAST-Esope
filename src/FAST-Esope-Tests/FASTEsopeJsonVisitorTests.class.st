@@ -11,6 +11,26 @@ FASTEsopeJsonVisitorTests >> jsonVisitor [
 ]
 
 { #category : #tests }
+FASTEsopeJsonVisitorTests >> testPointerDeclaration [
+	
+	| result stmt |
+	fortranCode := '      PROGRAM MYPROG
+C@_     pointeur pt.pstr
+      END
+'.
+	jsonCode := '{"meta":{"miVersion":"fortran77","miFilename":"tmpFASTSource.f"},"program_units":[{"anno":[],"blocks":[{"anno":[],"comment":"@_     pointeur pt.pstr","span":"(2:1)-(2:23)","tag":"comment"}],"name":"myprog","span":"(1:7)-(3:9)","subprograms":null,"tag":"main"}]}'.
+	result := self visitJsonCode.
+
+	stmt := result first statementBlock statements first.
+	self assert: stmt class equals: FASTEsopePointerDeclaration.	
+	self assert: stmt type name equals: 'pstr'.
+	self assert: stmt declarators size equals: 1.
+	self assert: stmt declarators anyOne name equals: 'pt'.
+	self assert: stmt startPos equals: 30.
+	self assert: stmt endPos equals: 44.
+]
+
+{ #category : #tests }
 FASTEsopeJsonVisitorTests >> testSegactCommand [
 	
 	| result stmt |

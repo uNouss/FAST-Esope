@@ -5,17 +5,6 @@ Class {
 }
 
 { #category : #'visiting esope' }
-FASTEsopeJsonVisitor >> processEsopeComment: anEsopeCommentNode [
-
-	| data |
-	data := super processEsopeComment: anEsopeCommentNode.
-	^ (self newEntity: FASTEsopePointerStatement atPosition: data second)
-		  command: data third ;
-		  pointerVariable: data fourth ;
-		  yourself
-]
-
-{ #category : #'visiting esope' }
 FASTEsopeJsonVisitor >> visitEsopeEndSegmentComment: anEsopeCommentNode [
 	| esopeCommand |
 	esopeCommand := self esopeCommand: (anEsopeCommentNode at: 'comment').
@@ -36,12 +25,59 @@ FASTEsopeJsonVisitor >> visitEsopeIncludeComment: anEsopeIncludeCommentNode [
 
 { #category : #'visiting esope' }
 FASTEsopeJsonVisitor >> visitEsopePointeurComment: anEsopeCommentNode [
-	| esopeCommand |
-	esopeCommand := self esopeCommand: (anEsopeCommentNode at: 'comment').
-	^{ self visitSpan: (anEsopeCommentNode at: 'span') .
-	  esopeCommand first .
-	  esopeCommand second } 
 
+	| data declArguments |
+	data := super visitEsopePointeurComment: anEsopeCommentNode.
+	declArguments := $. split: data fourth.
+
+	^ (self newEntity: FASTEsopePointerDeclaration atPosition: data second)
+		  declarators: { FASTFortranVariable new name: declArguments first ; yourself } ;
+		  type: ( FASTEsopePointerType new name: declArguments second ; yourself) ;
+		  yourself
+]
+
+{ #category : #'visiting esope' }
+FASTEsopeJsonVisitor >> visitEsopeSegactComment: anEsopeCommentNode [
+
+	| data |
+	data := super visitEsopeSegactComment: anEsopeCommentNode.
+	^ (self newEntity: FASTEsopePointerStatement atPosition: data second)
+		  command: data third ;
+		  pointerVariable: data fourth ;
+		  yourself
+]
+
+{ #category : #'visiting esope' }
+FASTEsopeJsonVisitor >> visitEsopeSegadjComment: anEsopeCommentNode [
+
+	| data |
+	data := super visitEsopeSegadjComment: anEsopeCommentNode.
+	^ (self newEntity: FASTEsopePointerStatement atPosition: data second)
+		  command: data third ;
+		  pointerVariable: data fourth ;
+		  yourself
+]
+
+{ #category : #'visiting esope' }
+FASTEsopeJsonVisitor >> visitEsopeSegdesComment: anEsopeCommentNode [
+
+	| data |
+	data := super visitEsopeSegdesComment: anEsopeCommentNode.
+	^ (self newEntity: FASTEsopePointerStatement atPosition: data second)
+		  command: data third ;
+		  pointerVariable: data fourth ;
+		  yourself
+]
+
+{ #category : #'visiting esope' }
+FASTEsopeJsonVisitor >> visitEsopeSeginiComment: anEsopeCommentNode [
+
+	| data |
+	data := super visitEsopeSeginiComment: anEsopeCommentNode.
+	^ (self newEntity: FASTEsopePointerStatement atPosition: data second)
+		  command: data third ;
+		  pointerVariable: data fourth ;
+		  yourself
 ]
 
 { #category : #'visiting esope' }
@@ -52,6 +88,17 @@ FASTEsopeJsonVisitor >> visitEsopeSegmentComment: anEsopeCommentNode [
 	  esopeCommand first .
 	  esopeCommand second } 
 
+]
+
+{ #category : #'visiting esope' }
+FASTEsopeJsonVisitor >> visitEsopeSegsupComment: anEsopeCommentNode [
+
+	| data |
+	data := super visitEsopeSegsupComment: anEsopeCommentNode.
+	^ (self newEntity: FASTEsopePointerStatement atPosition: data second)
+		  command: data third ;
+		  pointerVariable: data fourth ;
+		  yourself
 ]
 
 { #category : #'visiting esope' }
