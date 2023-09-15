@@ -1,0 +1,49 @@
+name: Continuous-development
+
+on:
+  push:
+    branches:
+      - master
+  # This will be triggered only for development branch
+  schedule:
+    - cron:  '0 0 * * 0'
+
+jobs:
+ build:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_NAME: 'Framoose'
+    name: $PROJECT_NAME
+    strategy:
+      matrix:
+        smalltalk: [ Pharo64-11 ]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hpi-swa/setup-smalltalkCI@v1
+        with:
+          smalltalk-image: ${{ matrix.smalltalk }}
+      - run: smalltalkci -s ${{ matrix.smalltalk }}
+        shell: bash
+        timeout-minutes: 15
+          
+      - name: rename
+        run: |
+          mv $SMALLTALK_CI_BUILD/* .
+          mv TravisCI.image $PROJECT_NAME-${{ matrix.smalltalk }}.image
+          mv TravisCI.changes $PROJECT_NAME-${{ matrix.smalltalk }}.changes
+          echo ${${{ matrix.smalltalk }}} | sed -e 's/.*\-//g ; s/\..*//g ; s/$/0/' > pharo.version
+        # Remove every character before '-' ; Remove point and anything after it ; add a '0'.
+        # This pattern transforms as follow: 'Pharo64-9.0' --> '90' and 'Pharo64-10' --> '100'.
+        
+      - name: package
+        run: |
+          zip -r $PROJECT_NAME-${{ matrix.smalltalk }}.zip $PROJECT_NAME-${{ matrix.smalltalk }}.image $PROJECT_NAME-${{ matrix.smalltalk }}.changes *.sources pharo.version
+          ls
+      - name: Update release
+        uses: Xotl/cool-github-releases@v1
+        with:
+          mode: update
+          replace_assets: true
+          tag_name: 'm11p11'
+          assets: ${{ env.PROJECT_NAME }}-${{ matrix.smalltalk }}.zip
+          github_token: ${{ secrets.GITHUB_TOKEN }}
