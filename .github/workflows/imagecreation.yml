@@ -16,7 +16,7 @@ jobs:
     name: $PROJECT_NAME
     strategy:
       matrix:
-        smalltalk: [ Pharo64-11 ]
+        smalltalk: [ Moose64-11 ]
     steps:
       - uses: actions/checkout@v3
       - uses: hpi-swa/setup-smalltalkCI@v1
