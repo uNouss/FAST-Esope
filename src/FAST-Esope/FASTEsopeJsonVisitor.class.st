@@ -1,26 +1,67 @@
 Class {
 	#name : #FASTEsopeJsonVisitor,
 	#superclass : #FASTFortranJsonVisitor,
+	#instVars : [
+		'currentSegment'
+	],
 	#category : #'FAST-Esope-Importer'
 }
 
+{ #category : #private }
+FASTEsopeJsonVisitor >> putMembers: entities inBody: stmtBlock [
+	"overriden to be able to ignore 'nil' entities, returned when processing segments"
+
+	entities do: [ :each |
+		each ifNotNil: [
+			each isStatement
+				ifTrue: [ stmtBlock addStatement: each ]
+				ifFalse: [ stmtBlock addComment: each ]
+		]
+	]
+]
+
+{ #category : #'visiting statement' }
+FASTEsopeJsonVisitor >> visitDeclarationStatement: aDeclarationStatementNode [
+	"overriding to be able to put the declaration in the 'currentSegment' if there is one"
+
+	| decl |
+	decl := super visitDeclarationStatement: aDeclarationStatementNode.
+
+	^currentSegment
+		ifNil: [ decl ]
+		ifNotNil: [ 
+			currentSegment addMember: decl.
+			nil
+		]
+]
+
 { #category : #'visiting esope' }
 FASTEsopeJsonVisitor >> visitEsopeEndSegmentComment: anEsopeCommentNode [
-	| esopeCommand |
-	esopeCommand := self esopeCommand: (anEsopeCommentNode at: 'comment').
-	^{ self visitSpan: (anEsopeCommentNode at: 'span') .
-	  esopeCommand first } 
+	"end of segment declaration (which should be in 'currentSegment).
+	 We update the span of this segment and return it"
+
+	| data segment |
+	self assert: currentSegment isNotNil.
+
+	data := super visitEsopeSegactComment: anEsopeCommentNode.
+
+	segment := currentSegment.
+	currentSegment := nil.
+	segment endPos: (self pointToPosition: data second second) - 1.
+
+	^segment
+
 
 ]
 
 { #category : #'visiting esope' }
 FASTEsopeJsonVisitor >> visitEsopeIncludeComment: anEsopeIncludeCommentNode [
 
-	| key esopeCommand |
-	esopeCommand := self esopeCommand:
-		                (anEsopeIncludeCommentNode at: 'comment').
-	key := esopeCommand first asLowercase capitalized , 'Comment'.
-	^ self visitJsonNode: key value: anEsopeIncludeCommentNode
+	| data |
+	data := super visitEsopeSegactComment: anEsopeIncludeCommentNode.
+	^ (self newEntity: FASTEsopeInclude atPosition: data second)
+		  filename: data fourth ;
+		  yourself
 ]
 
 { #category : #'visiting esope' }
@@ -82,12 +123,18 @@ FASTEsopeJsonVisitor >> visitEsopeSeginiComment: anEsopeCommentNode [
 
 { #category : #'visiting esope' }
 FASTEsopeJsonVisitor >> visitEsopeSegmentComment: anEsopeCommentNode [
-	| esopeCommand |
-	esopeCommand := self esopeCommand: (anEsopeCommentNode at: 'comment').
-	^{ self visitSpan: (anEsopeCommentNode at: 'span') .
-	  esopeCommand first .
-	  esopeCommand second } 
+	"start of a segment definition. We create a segment and keep it in 'currentSegment'
+	 next variable definitinos need to be stored in this 'currentSegment'
+	 visiting end OfSegment will close the currentSegment
+	Method returns nil to be able to ignore it in the parent body"
 
+	| data |
+	data := super visitEsopeSegmentComment: anEsopeCommentNode.
+	
+	currentSegment := self newEntity: FASTEsopeSegment atPosition: data second.
+	currentSegment name: data fourth.
+
+	^nil
 ]
 
 { #category : #'visiting esope' }
@@ -99,17 +146,4 @@ FASTEsopeJsonVisitor >> visitEsopeSegsupComment: anEsopeCommentNode [
 		  command: data third ;
 		  pointerVariable: data fourth ;
 		  yourself
-]
-
-{ #category : #'visiting esope' }
-FASTEsopeJsonVisitor >> visitIncludeComment: anEsopeIncludeCommentNode [
-
-	| esopeCommand |
-
-	esopeCommand := self esopeCommand:
-		                (anEsopeIncludeCommentNode at: 'comment').
-	^ { 
-		  (self visitSpan: (anEsopeIncludeCommentNode at: 'span')).
-		  esopeCommand first.
-		  esopeCommand second }
 ]

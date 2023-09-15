@@ -1,6 +1,8 @@
 Class {
 	#name : #FASTEsopeSegment,
 	#superclass : #FASTFortranType,
+	#traits : 'FASTEsopeTStatement',
+	#classTraits : 'FASTEsopeTStatement classTrait',
 	#instVars : [
 		'#name => FMProperty'
 	],
