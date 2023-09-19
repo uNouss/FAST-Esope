@@ -32,6 +32,7 @@ jobs:
           mv TravisCI.image $PROJECT_NAME-${{ matrix.smalltalk }}.image
           mv TravisCI.changes $PROJECT_NAME-${{ matrix.smalltalk }}.changes
           echo ${${{ matrix.smalltalk }}} | sed -e 's/.*\-//g ; s/\..*//g ; s/$/0/' > pharo.version
+          curl --version
         # Remove every character before '-' ; Remove point and anything after it ; add a '0'.
         # This pattern transforms as follow: 'Pharo64-9.0' --> '90' and 'Pharo64-10' --> '100'.
         
